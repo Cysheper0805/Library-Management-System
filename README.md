@@ -1,4 +1,4 @@
-# student
+# Library Management System
 
 ## Project setup
 ```
