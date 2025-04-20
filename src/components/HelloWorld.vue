@@ -164,7 +164,13 @@ export default {
       this.book = this.books.find(book => book.book_id === bookId);
       if(this.book.exist === '已借出') {
         this.reader = this.readers.find(reader => reader.id === readerId);
-      } 
+      } else {
+        this.reader = {
+          id: '',
+          name: '',
+          gender: ''
+        }
+      }
     },
     closeAdd() {
       this.show_add = false;
@@ -187,10 +193,14 @@ export default {
           return;
         }
         this.books.push(info.data.data);
-        const reader = await this.getReader(this.books[0].reader);
-        this.readers = [];
-        this.readers.push(reader.data.data);
-        console.log(this.reader);
+        if(this.books[0].exist === '已借出') {
+          const reader = await this.getReader(this.books[0].reader);
+          this.readers = [];
+          this.readers.push(reader.data.data);
+          console.log(this.reader);
+        } else {
+          this.readers = []
+        }
       } catch (error) {
         console.error('Error fetching student data:', error);
       }
